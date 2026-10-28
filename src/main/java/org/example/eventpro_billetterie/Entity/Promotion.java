@@ -7,7 +7,7 @@ import lombok.Setter;
 import org.example.eventpro_billetterie.Entity.Enums.DiscountType;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -35,24 +35,24 @@ public class Promotion {
     private BigDecimal discountValue;
 
     @Column(nullable = false)
-    private LocalDate startDate;
+    private LocalDateTime startDate;
 
     @Column(nullable = false)
-    private LocalDate endDate;
+    private LocalDateTime endDate;
 
     @Column(nullable = false)
-    private int usageLimit;
+    private int maxUsage;
 
     @Column(nullable = false)
     private int usageCount = 0;
 
-    public Promotion(Event event, String code, DiscountType discountType, BigDecimal discountValue, LocalDate startDate, LocalDate endDate, int usageLimit) {
+    public Promotion(Event event, String code, DiscountType discountType, BigDecimal discountValue, LocalDateTime startDate, LocalDateTime endDate, int maxUsage) {
         this.event = event;
         this.code = code;
         this.discountType = discountType;
         this.discountValue = discountValue;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.usageLimit = usageLimit;
+        this.maxUsage = maxUsage;
     }
 }
