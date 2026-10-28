@@ -13,5 +13,6 @@ public interface TicketCategoryMapper {
     TicketCategoryResponse toResponse(TicketCategory ticketCategory);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "eventCategories", ignore = true)
     TicketCategory toEntity(TicketCategoryCreateRequest creationDto);
 }

@@ -10,5 +10,6 @@ public interface ReservationLineMapper {
 
     @Mapping(target = "ticketCategoriesPerEventId", source = "eventCategory.id")
     @Mapping(target = "categoryName", source = "eventCategory.category.name")
+    @Mapping(target = "subtotal", ignore = true)
     ReservationLineResponse toResponse(ReservationLine reservationLine);
 }
