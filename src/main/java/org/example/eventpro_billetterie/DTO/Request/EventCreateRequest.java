@@ -7,11 +7,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.jackson.Jacksonized;
 
 import java.time.Instant;
 
 @Getter
 @Builder
+@Jacksonized
 public class EventCreateRequest {
 
     @NotBlank(message = "Title is required")

@@ -2,8 +2,11 @@ package org.example.eventpro_billetterie.DTO.Response;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.example.eventpro_billetterie.Entity.Promotion;
+import org.example.eventpro_billetterie.Entity.TicketCategoriesPerEvent;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -14,6 +17,8 @@ public class EventResponse {
     private String title;
     private String description;
     private String location;
+    private List<TicketCategoryPerEventResponse> categories;
+    private List<PromotionResponse> promotions;
     private Instant startDate;
     private Instant endDate;
     private Instant salesOpeningDate;

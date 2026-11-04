@@ -6,18 +6,25 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.jackson.Jacksonized;
 import org.example.eventpro_billetterie.Entity.Enums.DiscountType;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Builder
+@Jacksonized
 public class PromotionCreateRequest {
 
     @NotBlank(message = "Promotion code is required")
     private String code;
+
+    @NotNull(message = "Event is required")
+    private UUID eventId;
 
     @NotNull(message = "Discount type is required")
     private DiscountType discountType;

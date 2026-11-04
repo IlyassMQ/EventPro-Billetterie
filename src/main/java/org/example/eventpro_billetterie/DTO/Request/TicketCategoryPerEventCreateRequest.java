@@ -4,12 +4,14 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.jackson.Jacksonized;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Getter
 @Builder
+@Jacksonized
 public class TicketCategoryPerEventCreateRequest {
 
     @NotNull(message = "Event ID is required")

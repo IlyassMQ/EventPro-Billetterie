@@ -4,11 +4,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.jackson.Jacksonized;
 
 import java.util.UUID;
 
 @Getter
 @Builder
+@Jacksonized
 public class ReservationLineRequest {
 
     @NotNull(message = "Ticket category per event ID is required")
