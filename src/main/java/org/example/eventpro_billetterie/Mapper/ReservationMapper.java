@@ -13,12 +13,12 @@ public interface ReservationMapper {
 
     @Mapping(target = "eventId", source = "event.id")
     @Mapping(target = "eventTitle", source = "event.title")
+    @Mapping(target = "createdAt", source = "reservation.reservationDate")
     ReservationResponse toResponse(Reservation reservation);
 
     @Mapping(target = "eventId", source = "event.id")
     @Mapping(target = "eventTitle", source = "event.title")
     @Mapping(target = "reservationLines", source = "reservationLines")
-    @Mapping(target = "createdAt", ignore = true)
     ReservationDetailsResponse toDetailsResponse(Reservation reservation);
 
     Reservation toEntity(ReservationCreateRequest request);
