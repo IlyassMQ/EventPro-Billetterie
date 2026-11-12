@@ -179,6 +179,14 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.reporting.outputDirectory}/jacoco-service
+                            </outputDirectory>
+                            <includes>
+                                <include>org/example/eventpro_billetterie/Service/*</include>
+                            </includes>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
