@@ -35,6 +35,35 @@ pipeline {
                 }
             }
         }
+
+        stage('Docker Build and Push') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'DOCKERHUB_USERNAME',
+                    passwordVariable: 'DOCKERHUB_TOKEN'
+                )]) {
+                    sh '''
+                        set +x
+
+                        IMAGE_NAME="$DOCKERHUB_USERNAME/eventpro"
+
+                        docker build \
+                            -t "$IMAGE_NAME:$BUILD_NUMBER" \
+                            -t "$IMAGE_NAME:latest" .
+
+                        echo "$DOCKERHUB_TOKEN" | docker login \
+                            --username "$DOCKERHUB_USERNAME" \
+                            --password-stdin
+
+                        trap 'docker logout' EXIT
+
+                        docker push "$IMAGE_NAME:$BUILD_NUMBER"
+                        docker push "$IMAGE_NAME:latest"
+                    '''
+                }
+            }
+        }
     }
 
     post {

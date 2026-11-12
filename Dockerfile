@@ -1,7 +1,9 @@
-FROM postgres:17
+FROM eclipse-temurin:17-jre
 
-ENV POSTGRES_DB=eventpro_db
-ENV POSTGRES_USER=eventpro_user
-ENV POSTGRES_PASSWORD=eventpro_password
+WORKDIR /app
 
-EXPOSE 5432
+COPY target/*.war app.war
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.war"]
