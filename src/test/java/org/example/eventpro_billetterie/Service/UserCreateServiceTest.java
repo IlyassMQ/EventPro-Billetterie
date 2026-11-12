@@ -136,4 +136,64 @@ class UserServiceTest {
         verify(userRepository).save(any(ControlAgent.class));
         verify(userMapper).toResponse(agent);
     }
+
+
+    @Test
+    void shouldThrowExceptionWhenOrganizationNameIsEmpty() {
+        UserCreateRequest request = UserCreateRequest.builder()
+                .userName("Youssef")
+                .email("youssef@gmail.com")
+                .organisationName("")
+                .build();
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> userService.createOrganizer(request)
+        );
+
+        assertEquals("Organization name is required", exception.getMessage());
+
+        verifyNoInteractions(userRepository, userMapper);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenPhoneIsEmpty() {
+        UserCreateRequest request = UserCreateRequest.builder()
+                .userName("Sara")
+                .email("sara@gmail.com")
+                .phone("")
+                .build();
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> userService.createClient(request)
+        );
+
+        assertEquals("Phone number is required", exception.getMessage());
+
+        verifyNoInteractions(userRepository, userMapper);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenEmailAlreadyExists() {
+        UserCreateRequest request = UserCreateRequest.builder()
+                .userName("Ahmed")
+                .email("ahmed@gmail.com")
+                .build();
+
+        when(userRepository.existsByEmail("ahmed@gmail.com"))
+                .thenReturn(true);
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> userService.createAdmin(request)
+        );
+
+        assertEquals("Email already exists", exception.getMessage());
+
+        verify(userRepository).existsByEmail("ahmed@gmail.com");
+        verify(userRepository, never()).save(any());
+        verifyNoInteractions(userMapper);
+    }
+
 }
