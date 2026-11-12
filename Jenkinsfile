@@ -16,13 +16,24 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            junit testResults: 'target/surefire-reports/*.xml',
-                  allowEmptyResults: true
 
-            archiveArtifacts artifacts: 'target/site/jacoco/**',
-                   allowEmptyArchive: true
-        }
+post {
+    always {
+        junit testResults: 'target/surefire-reports/*.xml',
+              allowEmptyResults: true
+
+        archiveArtifacts artifacts: 'target/site/jacoco/**',
+                         allowEmptyArchive: true
+
+        publishHTML(target: [
+            reportDir: 'target/site/jacoco',
+            reportFiles: 'index.html',
+            reportName: 'JaCoCo Coverage Report',
+            keepAll: true,
+            alwaysLinkToLastBuild: true,
+            allowMissing: false
+        ])
     }
+}
+
 }
