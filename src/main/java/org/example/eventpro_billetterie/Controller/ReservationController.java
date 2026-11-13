@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.eventpro_billetterie.DTO.Request.ReservationCreateRequest;
 import org.example.eventpro_billetterie.DTO.Response.ReservationResponse;
+import org.example.eventpro_billetterie.Entity.Reservation;
 import org.example.eventpro_billetterie.Service.ReservationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -30,5 +31,11 @@ public class ReservationController {
 
         return reservationService.cancelReservation(reservationId, clientId);
     }
+
+    @GetMapping("/recherche")
+    public ReservationResponse rechecheReservation(@RequestParam String email,@RequestParam String categoryName,@RequestParam int qteMin,@RequestParam UUID eventId){
+        return reservationService.getReservationConfirmeParEmail(email,categoryName,qteMin,eventId);
+    }
+
 
 }

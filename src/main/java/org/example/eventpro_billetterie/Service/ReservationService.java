@@ -9,6 +9,7 @@ import org.example.eventpro_billetterie.Entity.Enums.DiscountType;
 import org.example.eventpro_billetterie.Entity.Enums.EventStatus;
 import org.example.eventpro_billetterie.Entity.Enums.ReservationStatus;
 import org.example.eventpro_billetterie.Exception.*;
+import org.example.eventpro_billetterie.Mapper.EventMapper;
 import org.example.eventpro_billetterie.Mapper.ReservationMapper;
 import org.example.eventpro_billetterie.Repository.*;
 import org.example.eventpro_billetterie.util.AmountCalculate;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -36,6 +38,7 @@ public class ReservationService {
     private final ReservationMapper reservationMapper;
     private final ReservationLineRepository reservationLineRepository;
     private final EventRepository eventRepository;
+    private final EventMapper eventMapper;
 
     @Transactional
     public ReservationResponse createReservation(ReservationCreateRequest request, UUID clientId) {
@@ -272,6 +275,21 @@ public class ReservationService {
         for (Reservation reservation : expiredReservations) {
             expireReservation(reservation.getId());
         }
+    }
+
+
+
+    public ReservationResponse getReservationConfirmeParEmail(String email, String categoryName, int qteMin, UUID eventId){
+       Optional<Reservation> reservationOp =  reservationRepository.getRservationConfirmer(email,categoryName,qteMin,eventId);
+        if (reservationOp.isEmpty()){
+            throw new AucuneReservationTrouveeException();
+        }
+
+        Reservation reservation = reservationOp.get();
+        return reservationMapper.toResponse(reservation);
+
+
+
     }
 }
 
